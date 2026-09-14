@@ -516,6 +516,7 @@ impl McpServer {
     matches!(
       tool_name,
       "run_profile"
+        | "restart_profile"
         | "kill_profile"
         | "batch_run_profiles"
         | "batch_stop_profiles"
@@ -830,6 +831,46 @@ impl McpServer {
             "profile_id": {
               "type": "string",
               "description": "The UUID of the profile to delete"
+            }
+          },
+          "required": ["profile_id"]
+        }),
+      },
+      McpTool {
+        name: "clone_profile".to_string(),
+        description: "Clone a stopped profile. Cookies and storage are copied; the fingerprint is reminted on the next launch.".to_string(),
+        input_schema: serde_json::json!({
+          "type": "object",
+          "properties": {
+            "profile_id": {
+              "type": "string",
+              "description": "The UUID of the profile to clone"
+            },
+            "name": {
+              "type": "string",
+              "description": "Optional name for the clone"
+            }
+          },
+          "required": ["profile_id"]
+        }),
+      },
+      McpTool {
+        name: "restart_profile".to_string(),
+        description: "Stop a running profile if needed, then launch it again with remote debugging. Requires an active Pro subscription.".to_string(),
+        input_schema: serde_json::json!({
+          "type": "object",
+          "properties": {
+            "profile_id": {
+              "type": "string",
+              "description": "The UUID of the profile to restart"
+            },
+            "url": {
+              "type": "string",
+              "description": "Optional URL to open after launch"
+            },
+            "headless": {
+              "type": "boolean",
+              "description": "Run the browser in headless mode"
             }
           },
           "required": ["profile_id"]
@@ -1233,6 +1274,10 @@ impl McpServer {
             "randomize_fingerprint_on_launch": {
               "type": "boolean",
               "description": "Whether to generate a new fingerprint on every launch"
+            },
+            "regenerate": {
+              "type": "boolean",
+              "description": "Drop the stored fingerprint so the next launch mints a new one"
             }
           },
           "required": ["profile_id"]
@@ -2235,6 +2280,15 @@ impl McpServer {
       "import_browser_profiles" => self.handle_import_browser_profiles(arguments).await,
       "update_profile" => self.handle_update_profile(arguments).await,
       "delete_profile" => self.handle_delete_profile(arguments).await,
+      "clone_profile" => self.handle_clone_profile(arguments).await,
+      "restart_profile" => {
+        Self::require_capability(
+          "Browser automation",
+          CLOUD_AUTH.can_use_browser_automation().await,
+        )
+        .await?;
+        self.handle_restart_profile(arguments).await
+      }
       "list_tags" => self.handle_list_tags().await,
       "list_proxies" => self.handle_list_proxies().await,
       "get_profile_status" => self.handle_get_profile_status(arguments).await,
@@ -3079,6 +3133,87 @@ impl McpServer {
         "text": format!("Profile '{profile_id}' deleted successfully")
       }]
     }))
+  }
+
+  async fn handle_clone_profile(
+    &self,
+    arguments: &serde_json::Value,
+  ) -> Result<serde_json::Value, McpError> {
+    let profile_id = arguments
+      .get("profile_id")
+      .and_then(|v| v.as_str())
+      .ok_or_else(|| McpError {
+        code: -32602,
+        message: "Missing profile_id".to_string(),
+      })?;
+    let name = arguments
+      .get("name")
+      .and_then(|v| v.as_str())
+      .map(str::to_string);
+
+    let profile = ProfileManager::instance()
+      .clone_profile(profile_id, name)
+      .map_err(|e| McpError {
+        code: -32000,
+        message: format!("Failed to clone profile: {e}"),
+      })?;
+
+    Ok(serde_json::json!({
+      "content": [{
+        "type": "text",
+        "text": serde_json::to_string_pretty(&profile).unwrap_or_default()
+      }]
+    }))
+  }
+
+  async fn handle_restart_profile(
+    &self,
+    arguments: &serde_json::Value,
+  ) -> Result<serde_json::Value, McpError> {
+    Self::require_capability(
+      "Restarting a profile",
+      CLOUD_AUTH.can_use_browser_automation().await,
+    )
+    .await?;
+
+    let profile_id = arguments
+      .get("profile_id")
+      .and_then(|v| v.as_str())
+      .ok_or_else(|| McpError {
+        code: -32602,
+        message: "Missing profile_id".to_string(),
+      })?;
+
+    let profiles = ProfileManager::instance()
+      .list_profiles()
+      .map_err(|e| McpError {
+        code: -32000,
+        message: format!("Failed to list profiles: {e}"),
+      })?;
+    let profile = profiles
+      .iter()
+      .find(|p| p.id.to_string() == profile_id)
+      .ok_or_else(|| McpError {
+        code: -32000,
+        message: format!("Profile not found: {profile_id}"),
+      })?;
+
+    let inner = self.inner.lock().await;
+    let app_handle = inner.app_handle.as_ref().ok_or_else(|| McpError {
+      code: -32000,
+      message: "MCP server not properly initialized".to_string(),
+    })?;
+    let running = ProfileManager::instance()
+      .check_browser_status(app_handle.clone(), profile)
+      .await
+      .unwrap_or(false)
+      || crate::remote_handoff::running_session_for_profile(profile_id).is_some();
+    drop(inner);
+
+    if running {
+      self.handle_kill_profile(arguments).await?;
+    }
+    self.handle_run_profile(arguments).await
   }
 
   async fn handle_list_tags(&self) -> Result<serde_json::Value, McpError> {
@@ -4272,6 +4407,10 @@ impl McpServer {
     let randomize = arguments
       .get("randomize_fingerprint_on_launch")
       .and_then(|v| v.as_bool());
+    let regenerate = arguments
+      .get("regenerate")
+      .and_then(|v| v.as_bool())
+      .unwrap_or(false);
 
     if let Some(os_val) = os {
       if !CLOUD_AUTH.is_fingerprint_os_allowed(Some(os_val)).await {
@@ -4309,7 +4448,11 @@ impl McpServer {
     match profile.browser.as_str() {
       "wayfern" => {
         let mut config = profile.wayfern_config.as_ref().cloned().unwrap_or_default();
-        if let Some(fp) = fingerprint {
+        if regenerate {
+          config.fingerprint = None;
+          config.identity_id = None;
+          config.identity_baseline = None;
+        } else if let Some(fp) = fingerprint {
           config.fingerprint = Some(fp.to_string());
         }
         if let Some(os_val) = os {
@@ -6311,7 +6454,9 @@ mod tests {
     // Profile tools
     assert!(tool_names.contains(&"list_profiles"));
     assert!(tool_names.contains(&"get_profile"));
+    assert!(tool_names.contains(&"clone_profile"));
     assert!(tool_names.contains(&"run_profile"));
+    assert!(tool_names.contains(&"restart_profile"));
     assert!(tool_names.contains(&"kill_profile"));
     assert!(tool_names.contains(&"get_profile_status"));
     // Profile import tools
@@ -6577,6 +6722,7 @@ mod tests {
 
     for name in [
       "run_profile",
+      "restart_profile",
       "kill_profile",
       "batch_run_profiles",
       "batch_stop_profiles",
@@ -6607,6 +6753,10 @@ mod tests {
 
     for name in [
       "list_profiles",
+      "clone_profile",
+      "get_profile_fingerprint",
+      "create_profile",
+      "delete_profile",
       // Configuration, not automation: one row in Donut cloud, no hardware
       // leased. Metering it would throttle an agent enrolling a fleet of
       // profiles, while the budget that guards the hardware is spent per run.

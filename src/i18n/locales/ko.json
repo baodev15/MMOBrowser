@@ -134,16 +134,16 @@
       "title": "기본 브라우저",
       "setAsDefault": "기본 브라우저로 설정",
       "alreadyDefault": "이미 기본 브라우저입니다",
-      "description": "기본 브라우저로 설정하면 Donut Browser가 웹 링크를 처리하고 사용할 프로필을 선택할 수 있습니다.",
-      "setSuccess": "이제 Donut Browser가 기본 브라우저입니다",
+      "description": "기본 브라우저로 설정하면 MMOBrowser가 웹 링크를 처리하고 사용할 프로필을 선택할 수 있습니다.",
+      "setSuccess": "이제 MMOBrowser가 기본 브라우저입니다",
       "setFailed": "기본 브라우저를 설정하지 못했습니다",
       "finishInSystemSettings": "Windows 설정에서 완료하세요",
-      "finishInSystemSettingsDescription": "Donut Browser가 등록되었습니다. Windows 설정이 열려 있습니다. '웹 브라우저'에서 Donut Browser를 선택하면 완료됩니다."
+      "finishInSystemSettingsDescription": "MMOBrowser가 등록되었습니다. Windows 설정이 열려 있습니다. '웹 브라우저'에서 MMOBrowser를 선택하면 완료됩니다."
     },
     "permissions": {
       "title": "시스템 권한",
       "loading": "권한 불러오는 중...",
-      "description": "이 권한은 Donut Browser에서 실행된 브라우저가 시스템 리소스에 액세스할 수 있도록 합니다. 각 웹사이트는 여전히 개별적으로 권한을 요청합니다.",
+      "description": "이 권한은 MMOBrowser에서 실행된 브라우저가 시스템 리소스에 액세스할 수 있도록 합니다. 각 웹사이트는 여전히 개별적으로 권한을 요청합니다.",
       "microphone": "마이크",
       "microphoneDescription": "브라우저 애플리케이션의 마이크 액세스",
       "camera": "카메라",
@@ -187,7 +187,7 @@
       "trialExpired": "체험판이 만료되었습니다",
       "trialExpiredDescription": "개인 사용은 무료로 유지됩니다. 상업적 사용에는 라이선스가 필요합니다.",
       "subscriptionActive": "구독 중 — {{plan}} 플랜",
-      "subscriptionActiveDescription": "Donut Browser 구독이 활성 상태입니다. 플랜 기간 동안 상업적 사용이 라이선스됩니다."
+      "subscriptionActiveDescription": "MMOBrowser 구독이 활성 상태입니다. 플랜 기간 동안 상업적 사용이 라이선스됩니다."
     },
     "advanced": {
       "title": "고급",
@@ -200,7 +200,7 @@
       "copyLogsDescription": "최근 로그를 민감 정보가 제거된 묶음으로 복사합니다(최대 5MB). 모든 유형의 개인 데이터를 식별할 수는 없으므로 공유하기 전에 검토하세요."
     },
     "disableAutoUpdates": "앱 자동 업데이트 사용 안 함",
-    "disableAutoUpdatesDescription": "Donut Browser 업데이트를 앱이 자동으로 확인하고 설치하지 않도록 합니다. 브라우저 업데이트는 영향을 받지 않습니다.",
+    "disableAutoUpdatesDescription": "MMOBrowser 업데이트를 앱이 자동으로 확인하고 설치하지 않도록 합니다. 브라우저 업데이트는 영향을 받지 않습니다.",
     "keepDecryptedProfilesInRam": "복호화된 프로필을 RAM에 유지",
     "keepDecryptedProfilesInRamDescription": "비밀번호로 보호된 프로필의 복호화된 RAM 사본을 실행 사이에 유지하여 시작 속도를 높입니다. 디스크의 사본은 그대로 암호화된 상태로 유지됩니다.",
     "privacy": {
@@ -228,7 +228,7 @@
       "extensions": "확장 프로그램"
     },
     "newProfile": "새로 만들기",
-    "donutLogo": "Donut Browser 로고",
+    "donutLogo": "MMOBrowser 로고",
     "scrollGroupsLeft": "그룹 왼쪽으로 스크롤",
     "scrollGroupsRight": "그룹 오른쪽으로 스크롤"
   },
@@ -1303,7 +1303,7 @@
     "launchHook": {
       "title": "실행 후크 URL",
       "label": "실행 후크 URL",
-      "description": "Donut Browser는 프로필이 실행될 때마다 이 URL로 GET 요청을 보냅니다.",
+      "description": "MMOBrowser는 프로필이 실행될 때마다 이 URL로 GET 요청을 보냅니다.",
       "placeholder": "https://example.com/hooks/profile-launch",
       "invalidUrlHint": "유효한 http:// 또는 https:// URL을 입력하세요."
     },
@@ -1745,7 +1745,7 @@
   },
   "wayfernTerms": {
     "title": "Wayfern 이용 약관",
-    "description": "Donut Browser를 사용하기 전에 Wayfern의 이용 약관을 읽고 동의해야 합니다.",
+    "description": "MMOBrowser를 사용하기 전에 Wayfern의 이용 약관을 읽고 동의해야 합니다.",
     "reviewLabel": "다음 위치에서 이용 약관을 검토하세요:",
     "agreeNotice": "\"동의함\"을 클릭하면 이 약관에 동의하는 것입니다.",
     "acceptButton": "동의함",
@@ -1756,7 +1756,7 @@
   "commercialTrial": {
     "title": "상업용 체험판 만료됨",
     "description": "2주 상업용 체험판 기간이 종료되었습니다.",
-    "body": "Donut Browser를 비즈니스 용도로 사용하는 경우 계속 사용하려면 상업용 라이선스를 구매해야 합니다. 개인 용도로는 계속 무료로 사용할 수 있습니다.",
+    "body": "MMOBrowser를 비즈니스 용도로 사용하는 경우 계속 사용하려면 상업용 라이선스를 구매해야 합니다. 개인 용도로는 계속 무료로 사용할 수 있습니다.",
     "understandButton": "이해했습니다",
     "failed": "확인 저장 실패",
     "tryAgain": "다시 시도하세요"
@@ -1764,10 +1764,10 @@
   "permissionDialog": {
     "titleMicrophone": "마이크 액세스가 필요합니다",
     "titleCamera": "카메라 액세스가 필요합니다",
-    "descMicrophone": "Donut Browser는 웹 브라우저에서 마이크 기능을 활성화하기 위해 마이크에 액세스해야 합니다. 마이크를 사용하려는 각 웹사이트는 여전히 개별적으로 권한을 요청합니다.",
-    "descCamera": "Donut Browser는 웹 브라우저에서 카메라 기능을 활성화하기 위해 카메라에 액세스해야 합니다. 카메라를 사용하려는 각 웹사이트는 여전히 개별적으로 권한을 요청합니다.",
-    "grantedMicrophone": "권한이 허용되었습니다! 이제 Donut Browser에서 실행된 브라우저가 마이크에 액세스할 수 있습니다.",
-    "grantedCamera": "권한이 허용되었습니다! 이제 Donut Browser에서 실행된 브라우저가 카메라에 액세스할 수 있습니다.",
+    "descMicrophone": "MMOBrowser는 웹 브라우저에서 마이크 기능을 활성화하기 위해 마이크에 액세스해야 합니다. 마이크를 사용하려는 각 웹사이트는 여전히 개별적으로 권한을 요청합니다.",
+    "descCamera": "MMOBrowser는 웹 브라우저에서 카메라 기능을 활성화하기 위해 카메라에 액세스해야 합니다. 카메라를 사용하려는 각 웹사이트는 여전히 개별적으로 권한을 요청합니다.",
+    "grantedMicrophone": "권한이 허용되었습니다! 이제 MMOBrowser에서 실행된 브라우저가 마이크에 액세스할 수 있습니다.",
+    "grantedCamera": "권한이 허용되었습니다! 이제 MMOBrowser에서 실행된 브라우저가 카메라에 액세스할 수 있습니다.",
     "notGrantedMicrophone": "권한이 허용되지 않았습니다. 아래 버튼을 클릭하여 마이크에 대한 액세스를 요청하세요.",
     "notGrantedCamera": "권한이 허용되지 않았습니다. 아래 버튼을 클릭하여 카메라에 대한 액세스를 요청하세요.",
     "doneButton": "완료",
@@ -1870,7 +1870,7 @@
   },
   "appUpdate": {
     "toast": {
-      "updateFailed": "Donut Browser 업데이트 실패",
+      "updateFailed": "MMOBrowser 업데이트 실패",
       "restartFailed": "재시작 실패",
       "updateReady": "업데이트 준비됨, 적용하려면 재시작하세요",
       "manualDownloadRequired": "수동 다운로드 필요",
@@ -1963,7 +1963,7 @@
     },
     "warnings": {
       "forgetWarningTitle": "중요: 이 비밀번호는 복구할 수 없습니다",
-      "forgetWarningBody": "Donut Browser는 이 비밀번호를 재설정, 복구 또는 우회할 수 없습니다. 잊어버리면 이 프로필의 데이터에 영구적으로 액세스할 수 없게 됩니다."
+      "forgetWarningBody": "MMOBrowser는 이 비밀번호를 재설정, 복구 또는 우회할 수 없습니다. 잊어버리면 이 프로필의 데이터에 영구적으로 액세스할 수 없게 됩니다."
     },
     "modes": {
       "set": "설정",
@@ -2046,9 +2046,9 @@
     "dnsRulesSaveFailed": "DNS 규칙을 저장하지 못했습니다.",
     "dnsRulesExportFailed": "DNS 규칙을 내보내지 못했습니다.",
     "fingerprintMatchFailed": "지문을 프록시에 맞추지 못했습니다.",
-    "proxySidecarVersionMismatch": "Donut Browser 파일에 서로 다른 버전이 섞여 있습니다. 최신 업데이트를 다시 설치해 주세요. 프로필은 안전하게 유지됩니다.",
+    "proxySidecarVersionMismatch": "MMOBrowser 파일에 서로 다른 버전이 섞여 있습니다. 최신 업데이트를 다시 설치해 주세요. 프로필은 안전하게 유지됩니다.",
     "updateProfilesRunning": "업데이트를 설치하기 전에 실행 중인 모든 프로필을 중지하세요.",
-    "updatePreparationFailed": "Donut Browser가 백그라운드 네트워크 프로세스를 안전하게 중지하지 못했습니다. 컴퓨터를 다시 시작한 후 업데이트를 다시 시도하세요.",
+    "updatePreparationFailed": "MMOBrowser가 백그라운드 네트워크 프로세스를 안전하게 중지하지 못했습니다. 컴퓨터를 다시 시작한 후 업데이트를 다시 시도하세요.",
     "wayfernTermsRequired": "MCP 서버를 시작하기 전에 Wayfern 이용 약관에 동의하세요.",
     "apiPortUnavailable": "API 서버에서 사용 가능한 포트를 찾지 못했습니다.",
     "mcpServerAlreadyRunning": "MCP 서버가 이미 실행 중입니다.",
@@ -2056,14 +2056,14 @@
     "mcpPortUnavailable": "MCP 서버에서 사용 가능한 포트를 찾지 못했습니다.",
     "mcpConfigurationUnavailable": "MCP 서버 구성을 사용할 수 없습니다. 서버를 다시 시작한 후 다시 시도하세요.",
     "mcpAgentUnknown": "이 MCP 클라이언트는 지원되지 않습니다.",
-    "mcpAgentInstallFailed": "MCP 클라이언트에 Donut Browser를 추가하지 못했습니다: {{detail}}",
-    "mcpAgentRemoveFailed": "MCP 클라이언트에서 Donut Browser를 제거하지 못했습니다: {{detail}}",
+    "mcpAgentInstallFailed": "MCP 클라이언트에 MMOBrowser를 추가하지 못했습니다: {{detail}}",
+    "mcpAgentRemoveFailed": "MCP 클라이언트에서 MMOBrowser를 제거하지 못했습니다: {{detail}}",
     "vlessConfigInvalid": "VLESS URI가 올바르지 않습니다.",
     "xrayUnavailable": "이 시스템에서는 Xray-core를 사용할 수 없습니다.",
     "xrayUnsupportedOs": "VLESS를 사용하려면 macOS 12 이상이 필요합니다.",
     "xrayStartFailed": "Xray-core를 시작할 수 없습니다.",
-    "cloudNotSignedIn": "이 기능을 사용하려면 Donut Browser 계정에 로그인하세요.",
-    "cloudUnreachable": "Donut Browser 서버에 연결하지 못했습니다. 연결 상태를 확인하고 다시 시도하세요.",
+    "cloudNotSignedIn": "로컬 동기화 서버가 없으면 이 기능을 사용할 수 없습니다.",
+    "cloudUnreachable": "MMOBrowser 서버에 연결하지 못했습니다. 연결 상태를 확인하고 다시 시도하세요.",
     "cloudRequestFailed": "요청이 실패했습니다. 잠시 후 다시 시도하세요.",
     "remoteRateLimited": "요청이 너무 많습니다. 잠시 기다렸다가 다시 시도하세요.",
     "remoteNoCapacity": "지금은 사용 가능한 원격 머신이 없습니다. 몇 분 후에 다시 시도하세요.",
@@ -2133,7 +2133,7 @@
       "importProfileHint": "다른 도구에서 프로필 가져오기",
       "keyboardShortcuts": "키보드 단축키",
       "keyboardShortcutsHint": "모든 단축키 보기",
-      "about": "Donut Browser 정보",
+      "about": "MMOBrowser 정보",
       "aboutHint": "버전 및 앱 정보"
     },
     "network": "네트워크",
@@ -2180,8 +2180,8 @@
   "account": {
     "refreshed": "계정이 새로 고쳐졌습니다",
     "loggedOut": "로그아웃됨",
-    "signedOut": "로그아웃됨",
-    "signedOutDescription": "클라우드 동기화, 암호화된 프로필 및 팀 기능을 사용하려면 로그인하세요.",
+    "signedOut": "로컬",
+    "signedOutDescription": "이 앱은 로컬에서 실행됩니다. 클라우드 계정이 필요하지 않습니다.",
     "plan": "플랜: {{plan}} · {{period}}",
     "refresh": "새로 고침",
     "logout": "로그아웃",
@@ -2230,7 +2230,7 @@
       "stopProfile": "{{name}} 중지",
       "profileInfo": "정보 — {{name}}",
       "createProfile": "프로필 생성",
-      "about": "Donut Browser 정보"
+      "about": "MMOBrowser 정보"
     }
   },
   "shortcuts": {
@@ -2247,13 +2247,13 @@
     "goCookieBot": "Cookie Bot"
   },
   "closeConfirm": {
-    "title": "Donut Browser를 닫으시겠습니까?",
+    "title": "MMOBrowser를 닫으시겠습니까?",
     "description": "앱을 시스템 트레이로 보내시겠습니까, 아니면 종료하시겠습니까?",
     "minimize": "트레이로 최소화",
     "quit": "종료"
   },
   "tray": {
-    "show": "Donut Browser 표시",
+    "show": "MMOBrowser 표시",
     "quit": "종료"
   },
   "onboarding": {
@@ -2274,13 +2274,13 @@
       "finish": "완료"
     },
     "thankYou": {
-      "title": "Donut Browser를 선택해 주셔서 감사합니다",
+      "title": "MMOBrowser를 선택해 주셔서 감사합니다",
       "body": "각 ID를 분리하고 어떤 데이터도 기기 밖으로 내보내지 않으면서 더 프라이빗한 브라우징에 도움이 되길 바랍니다. 즐겁게 사용하세요.",
       "cta": "브라우징 시작"
     }
   },
   "welcome": {
-    "title": "Donut Browser에 오신 것을 환영합니다",
+    "title": "MMOBrowser에 오신 것을 환영합니다",
     "tagline": "여러 ID를 한 번에 관리할 수 있는 오픈 소스 안티디텍트 브라우저입니다.",
     "skip": "건너뛰기",
     "next": "다음",
@@ -2324,7 +2324,7 @@
     },
     "license": {
       "title": "라이선스",
-      "body": "Donut Browser는 오픈 소스이며 무료로 사용할 수 있습니다.",
+      "body": "MMOBrowser는 오픈 소스이며 무료로 사용할 수 있습니다.",
       "agree": "이해했습니다",
       "personalTitle": "개인 사용",
       "personalDesc": "영구적으로 무료입니다.",

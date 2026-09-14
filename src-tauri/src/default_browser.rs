@@ -162,8 +162,8 @@ mod windows {
   /// The key Windows knows us by. Never shown to a person.
   const APP_NAME: &str = "DonutBrowser";
   /// The name Windows shows in "Default apps" and in "Open with".
-  const DISPLAY_NAME: &str = "Donut Browser";
-  const DESCRIPTION: &str = "Donut Browser - Simple Yet Powerful Anti-Detect Browser";
+  const DISPLAY_NAME: &str = "MMOBrowser";
+  const DESCRIPTION: &str = "MMOBrowser - Simple Yet Powerful Anti-Detect Browser";
   const PROG_ID: &str = "DonutBrowser.HTML";
 
   /// A web browser registers under `StartMenuInternet`, and

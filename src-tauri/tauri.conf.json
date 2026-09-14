@@ -1,6 +1,6 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "Donut",
+  "productName": "MMOBrowser",
   "version": "0.30.0",
   "identifier": "com.donutbrowser",
   "build": {

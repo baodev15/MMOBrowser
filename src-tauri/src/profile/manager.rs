@@ -1696,8 +1696,8 @@ mod tests {
     let profiles_dir = manager.get_profiles_dir();
 
     assert!(
-      profiles_dir.to_string_lossy().contains("DonutBrowser"),
-      "Profiles dir should contain DonutBrowser"
+      profiles_dir.to_string_lossy().contains(".DataMMOBrowser"),
+      "Profiles dir should contain .DataMMOBrowser"
     );
     assert!(
       profiles_dir.to_string_lossy().contains("profiles"),
@@ -1713,8 +1713,8 @@ mod tests {
     let path_str = binaries_dir.to_string_lossy();
 
     assert!(
-      path_str.contains("DonutBrowser"),
-      "Binaries dir should contain DonutBrowser"
+      path_str.contains(".DataMMOBrowser"),
+      "Binaries dir should contain .DataMMOBrowser"
     );
     assert!(
       path_str.contains("binaries"),

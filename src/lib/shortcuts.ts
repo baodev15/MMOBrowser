@@ -36,7 +36,6 @@ export type ShortcutId =
   | "goProxies"
   | "goExtensions"
   | "goGroups"
-  | "goCookieBot"
   | "goIntegrations"
   | "goSettings";
 
@@ -90,14 +89,6 @@ export const SHORTCUTS: ShortcutDef[] = [
     labelKey: "shortcuts.goGroups",
     group: "navigation",
     key: "g",
-    mod: true,
-  },
-  {
-    // Mod+B: "bot". Every other letter in the navigation group was taken.
-    id: "goCookieBot",
-    labelKey: "shortcuts.goCookieBot",
-    group: "navigation",
-    key: "b",
     mod: true,
   },
   {

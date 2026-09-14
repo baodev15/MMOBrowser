@@ -4066,23 +4066,17 @@ export function ProfilesDataTable({
             <LuCookie />
           </DataTableActionBarAction>
         )}
-        <span className="relative inline-flex">
-          <DataTableActionBarAction
-            tooltip={
-              cookieBotUnlocked
-                ? t("cookieBot.actionBar.enrol")
-                : t("cookieBot.actionBar.proRequired")
-            }
-            onClick={cookieBotUnlocked ? handleBulkCookieBotEnrol : undefined}
-            disabled={!cookieBotUnlocked}
-            size="icon"
-          >
-            <LuMoon />
-          </DataTableActionBarAction>
-          {!cookieBotUnlocked && (
-            <ProBadge className="pointer-events-none absolute -top-2 -right-2" />
-          )}
-        </span>
+        {cookieBotUnlocked && (
+          <span className="relative inline-flex">
+            <DataTableActionBarAction
+              tooltip={t("cookieBot.actionBar.enrol")}
+              onClick={handleBulkCookieBotEnrol}
+              size="icon"
+            >
+              <LuMoon />
+            </DataTableActionBarAction>
+          </span>
+        )}
         {onBulkDelete && (
           <DataTableActionBarAction
             tooltip={t("common.buttons.delete")}

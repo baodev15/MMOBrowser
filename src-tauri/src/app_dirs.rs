@@ -101,9 +101,9 @@ pub fn window_state_path<R: tauri::Runtime>(handle: &tauri::AppHandle<R>) -> Opt
 
 pub fn app_name() -> &'static str {
   if cfg!(debug_assertions) {
-    "DonutBrowserDev"
+    ".DataMMOBrowserDev"
   } else {
-    "DonutBrowser"
+    ".DataMMOBrowser"
   }
 }
 
@@ -297,8 +297,8 @@ mod tests {
   fn test_app_name() {
     let name = app_name();
     assert!(
-      name == "DonutBrowser" || name == "DonutBrowserDev",
-      "app_name should be DonutBrowser or DonutBrowserDev, got: {name}"
+      name == ".DataMMOBrowser" || name == ".DataMMOBrowserDev",
+      "app_name should be .DataMMOBrowser or .DataMMOBrowserDev, got: {name}"
     );
   }
 

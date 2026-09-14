@@ -157,6 +157,36 @@ pub struct UpdateProfileRequest {
   pub clear_on_close: Option<bool>,
 }
 
+#[derive(Debug, Default, Deserialize, ToSchema)]
+struct CloneProfileRequest {
+  /// Optional name for the clone. Omit to get "Name (copy)", "Name (copy 2)", …
+  pub name: Option<String>,
+}
+
+#[derive(Debug, Serialize, ToSchema)]
+struct ApiFingerprint {
+  pub browser: String,
+  pub fingerprint: Option<String>,
+  pub os: Option<String>,
+  pub randomize_fingerprint_on_launch: Option<bool>,
+  pub screen_max_width: Option<u32>,
+  pub screen_max_height: Option<u32>,
+  pub screen_min_width: Option<u32>,
+  pub screen_min_height: Option<u32>,
+}
+
+#[derive(Debug, Default, Deserialize, ToSchema)]
+struct UpdateFingerprintRequest {
+  /// Fingerprint JSON string. Omit to keep the stored value.
+  pub fingerprint: Option<String>,
+  /// Fingerprint OS: `"windows"`, `"macos"`, `"linux"`, `"android"`, `"ios"`.
+  /// Cross-OS spoofing needs a plan that includes fingerprint editing.
+  pub os: Option<String>,
+  pub randomize_fingerprint_on_launch: Option<bool>,
+  /// Drop the stored fingerprint and identity so the next launch mints a new one.
+  pub regenerate: Option<bool>,
+}
+
 #[derive(Clone)]
 struct ApiServerState {
   app_handle: tauri::AppHandle,
@@ -574,6 +604,10 @@ struct ImportProxiesResponse {
     create_profile,
     update_profile,
     delete_profile,
+    clone_profile_api,
+    get_profile_fingerprint_api,
+    update_profile_fingerprint_api,
+    restart_profile,
     run_profile,
     run_profile_remote,
     stop_remote_session,
@@ -640,6 +674,9 @@ struct ImportProxiesResponse {
     ApiProfileResponse,
     CreateProfileRequest,
     UpdateProfileRequest,
+    CloneProfileRequest,
+    ApiFingerprint,
+    UpdateFingerprintRequest,
     ApiGroupResponse,
     CreateGroupRequest,
     UpdateGroupRequest,
@@ -872,6 +909,12 @@ fn build_v1_router() -> Router<ApiServerState> {
   let (routes, _) = OpenApiRouter::new()
     .routes(routes!(get_profiles, create_profile))
     .routes(routes!(get_profile, update_profile, delete_profile))
+    .routes(routes!(clone_profile_api))
+    .routes(routes!(
+      get_profile_fingerprint_api,
+      update_profile_fingerprint_api
+    ))
+    .routes(routes!(restart_profile))
     .routes(routes!(run_profile))
     .routes(routes!(run_profile_remote))
     // One `routes!` per PATH, not per handler: the GET and the DELETE share
@@ -1094,7 +1137,7 @@ fn is_automation_request(method: &Method, path: &str) -> bool {
     // and every remote launch bypassed the quota it declares a 429 for.
     (
       Some(_),
-      Some("run" | "open-url" | "kill" | "run-remote"),
+      Some("run" | "open-url" | "kill" | "run-remote" | "restart"),
       None
     )
   )
@@ -1223,6 +1266,10 @@ fn manager_error_response(err: impl std::fmt::Display) -> (StatusCode, String) {
   let lower = msg.to_lowercase();
   let status = if lower.contains("not found") {
     StatusCode::NOT_FOUND
+  } else if lower.contains("while browser is running") {
+    // Clone, delete, and fingerprint edits refuse a live browser. That is
+    // "stop it and try again", not a malformed body.
+    StatusCode::CONFLICT
   } else if lower.contains("already exists")
     || lower.contains("cannot set both")
     || lower.contains("cannot edit")
@@ -1691,6 +1738,304 @@ async fn delete_profile(
     Ok(_) => Ok(StatusCode::NO_CONTENT),
     Err(e) => Err(manager_error_response(e)),
   }
+}
+
+#[utoipa::path(
+  post,
+  path = "/v1/profiles/{id}/clone",
+  params(
+    ("id" = String, Path, description = "Source profile ID")
+  ),
+  request_body = CloneProfileRequest,
+  responses(
+    (status = 200, description = "Profile cloned; cookies and storage are copied, fingerprint is reminted on next launch", body = ApiProfileResponse),
+    (status = 400, description = "Invalid profile ID or empty name"),
+    (status = 401, description = "Unauthorized"),
+    (status = 404, description = "Profile not found"),
+    (status = 409, description = "Source profile is running"),
+    (status = 500, description = "Internal server error")
+  ),
+  security(
+    ("bearer_auth" = [])
+  ),
+  tag = "profiles"
+)]
+async fn clone_profile_api(
+  Path(id): Path<String>,
+  Json(request): Json<CloneProfileRequest>,
+) -> Result<Json<ApiProfileResponse>, (StatusCode, String)> {
+  match ProfileManager::instance().clone_profile(&id, request.name) {
+    Ok(profile) => Ok(Json(ApiProfileResponse {
+      profile: ApiProfile::from(&profile),
+    })),
+    Err(e) => Err(manager_error_response(e)),
+  }
+}
+
+fn fingerprint_from_profile(
+  profile: &crate::profile::BrowserProfile,
+) -> Result<ApiFingerprint, (StatusCode, String)> {
+  if profile.browser != "wayfern" {
+    return Err((
+      StatusCode::BAD_REQUEST,
+      "fingerprint endpoints only support wayfern profiles".to_string(),
+    ));
+  }
+  let config = profile.wayfern_config.clone().unwrap_or_default();
+  Ok(ApiFingerprint {
+    browser: profile.browser.clone(),
+    fingerprint: config.fingerprint,
+    os: config.os,
+    randomize_fingerprint_on_launch: config.randomize_fingerprint_on_launch,
+    screen_max_width: config.screen_max_width,
+    screen_max_height: config.screen_max_height,
+    screen_min_width: config.screen_min_width,
+    screen_min_height: config.screen_min_height,
+  })
+}
+
+fn find_profile(id: &str) -> Result<crate::profile::BrowserProfile, (StatusCode, String)> {
+  let profiles = ProfileManager::instance()
+    .list_profiles()
+    .map_err(manager_error_response)?;
+  profiles
+    .into_iter()
+    .find(|p| p.id.to_string() == id)
+    .ok_or_else(|| (StatusCode::NOT_FOUND, "profile not found".to_string()))
+}
+
+#[utoipa::path(
+  get,
+  path = "/v1/profiles/{id}/fingerprint",
+  params(
+    ("id" = String, Path, description = "Profile ID")
+  ),
+  responses(
+    (status = 200, description = "Current fingerprint configuration", body = ApiFingerprint),
+    (status = 400, description = "Profile is not a Wayfern profile"),
+    (status = 401, description = "Unauthorized"),
+    (status = 404, description = "Profile not found"),
+    (status = 500, description = "Internal server error")
+  ),
+  security(
+    ("bearer_auth" = [])
+  ),
+  tag = "profiles"
+)]
+async fn get_profile_fingerprint_api(
+  Path(id): Path<String>,
+) -> Result<Json<ApiFingerprint>, (StatusCode, String)> {
+  let profile = find_profile(&id)?;
+  Ok(Json(fingerprint_from_profile(&profile)?))
+}
+
+#[utoipa::path(
+  put,
+  path = "/v1/profiles/{id}/fingerprint",
+  params(
+    ("id" = String, Path, description = "Profile ID")
+  ),
+  request_body = UpdateFingerprintRequest,
+  responses(
+    (status = 200, description = "Fingerprint updated", body = ApiFingerprint),
+    (status = 400, description = "Invalid fingerprint or profile is not Wayfern"),
+    (status = 401, description = "Unauthorized"),
+    (status = 402, description = "Fingerprint editing or cross-OS spoofing requires a paid plan"),
+    (status = 404, description = "Profile not found"),
+    (status = 409, description = "Browser is running"),
+    (status = 500, description = "Internal server error")
+  ),
+  security(
+    ("bearer_auth" = [])
+  ),
+  tag = "profiles"
+)]
+async fn update_profile_fingerprint_api(
+  Path(id): Path<String>,
+  State(state): State<ApiServerState>,
+  Json(request): Json<UpdateFingerprintRequest>,
+) -> Result<Json<ApiFingerprint>, (StatusCode, String)> {
+  if !crate::cloud_auth::CLOUD_AUTH
+    .can_use_cross_os_fingerprints()
+    .await
+  {
+    return Err((
+      StatusCode::PAYMENT_REQUIRED,
+      serde_json::json!({ "code": "FINGERPRINT_REQUIRES_PRO" }).to_string(),
+    ));
+  }
+
+  let profile = find_profile(&id)?;
+  fingerprint_from_profile(&profile)?;
+  let mut config = profile.wayfern_config.clone().unwrap_or_default();
+
+  if request.regenerate.unwrap_or(false) {
+    config.fingerprint = None;
+    config.identity_id = None;
+    config.identity_baseline = None;
+  } else if let Some(fingerprint) = request.fingerprint {
+    config.fingerprint = Some(fingerprint);
+  }
+
+  if let Some(os) = request.os {
+    if !crate::cloud_auth::CLOUD_AUTH
+      .is_fingerprint_os_allowed(Some(os.as_str()))
+      .await
+    {
+      return Err((
+        StatusCode::PAYMENT_REQUIRED,
+        serde_json::json!({ "code": "FINGERPRINT_REQUIRES_PRO" }).to_string(),
+      ));
+    }
+    config.os = Some(os);
+  }
+
+  if let Some(randomize) = request.randomize_fingerprint_on_launch {
+    config.randomize_fingerprint_on_launch = Some(randomize);
+  }
+
+  ProfileManager::instance()
+    .update_wayfern_config(state.app_handle.clone(), &id, config)
+    .await
+    .map_err(manager_error_response)?;
+
+  let updated = find_profile(&id)?;
+  Ok(Json(fingerprint_from_profile(&updated)?))
+}
+
+async fn launch_profile_automation(
+  app_handle: tauri::AppHandle,
+  profile: crate::profile::BrowserProfile,
+  url: Option<String>,
+  headless: bool,
+) -> Result<RunProfileResponse, (StatusCode, String)> {
+  if profile.is_cross_os() {
+    return Err((
+      StatusCode::BAD_REQUEST,
+      "cannot launch a cross-OS profile locally; use /run-remote".to_string(),
+    ));
+  }
+
+  crate::team_lock::acquire_team_lock_if_needed(&profile)
+    .await
+    .map_err(manager_error_response)?;
+
+  let remote_debugging_port = {
+    let listener = tokio::net::TcpListener::bind("127.0.0.1:0")
+      .await
+      .map_err(manager_error_response)?;
+    let port = listener
+      .local_addr()
+      .map_err(manager_error_response)?
+      .port();
+    drop(listener);
+    port
+  };
+
+  let updated_profile = crate::browser_runner::launch_browser_profile_impl(
+    app_handle,
+    profile,
+    url,
+    crate::browser_runner::LaunchOptions::automation(Some(remote_debugging_port), headless),
+  )
+  .await
+  .map_err(manager_error_response)?;
+
+  Ok(RunProfileResponse {
+    profile_id: updated_profile.id.to_string(),
+    remote_debugging_port,
+    headless,
+  })
+}
+
+async fn wait_until_profile_stopped(
+  app_handle: &tauri::AppHandle,
+  profile: &crate::profile::BrowserProfile,
+) -> Result<(), (StatusCode, String)> {
+  let deadline = tokio::time::Instant::now() + std::time::Duration::from_secs(15);
+  loop {
+    let running = ProfileManager::instance()
+      .check_browser_status(app_handle.clone(), profile)
+      .await
+      .unwrap_or(false);
+    let remote =
+      crate::remote_handoff::running_session_for_profile(&profile.id.to_string()).is_some();
+    if !running && !remote {
+      return Ok(());
+    }
+    if tokio::time::Instant::now() >= deadline {
+      return Err((
+        StatusCode::CONFLICT,
+        "profile is still running after stop".to_string(),
+      ));
+    }
+    tokio::time::sleep(std::time::Duration::from_millis(200)).await;
+  }
+}
+
+#[utoipa::path(
+  post,
+  path = "/v1/profiles/{id}/restart",
+  params(
+    ("id" = String, Path, description = "Profile ID")
+  ),
+  request_body = RunProfileRequest,
+  responses(
+    (status = 200, description = "Browser stopped if running, then launched with a new remote-debugging port", body = RunProfileResponse),
+    (status = 400, description = "Cannot launch a cross-OS profile locally"),
+    (status = 401, description = "Unauthorized"),
+    (status = 402, description = "Active paid plan with browser automation required"),
+    (status = 404, description = "Profile not found"),
+    (status = 409, description = "Profile is locked, or it did not stop in time"),
+    (status = 429, description = "Automation request rate limit exceeded"),
+    (status = 503, description = "The fleet could not be reached; the remote browser is still running"),
+    (status = 500, description = "Internal server error")
+  ),
+  security(
+    ("bearer_auth" = [])
+  ),
+  tag = "profiles"
+)]
+async fn restart_profile(
+  Path(id): Path<String>,
+  State(state): State<ApiServerState>,
+  Json(request): Json<RunProfileRequest>,
+) -> Result<Json<RunProfileResponse>, (StatusCode, String)> {
+  if !crate::cloud_auth::CLOUD_AUTH
+    .can_use_browser_automation()
+    .await
+  {
+    return Err((StatusCode::PAYMENT_REQUIRED, String::new()));
+  }
+
+  let profile = find_profile(&id)?;
+  let running = ProfileManager::instance()
+    .check_browser_status(state.app_handle.clone(), &profile)
+    .await
+    .unwrap_or(false)
+    || crate::remote_handoff::running_session_for_profile(&id).is_some();
+
+  if running {
+    crate::browser_runner::BrowserRunner::instance()
+      .kill_browser_process(state.app_handle.clone(), &profile)
+      .await
+      .map_err(|e| {
+        let message = e.to_string();
+        if message.contains("REMOTE_") {
+          (StatusCode::SERVICE_UNAVAILABLE, message)
+        } else {
+          manager_error_response(message)
+        }
+      })?;
+    crate::team_lock::release_team_lock_if_needed(&profile).await;
+    wait_until_profile_stopped(&state.app_handle, &profile).await?;
+  }
+
+  let profile = find_profile(&id)?;
+  let headless = request.headless.unwrap_or(false);
+  let launched =
+    launch_profile_automation(state.app_handle.clone(), profile, request.url, headless).await?;
+  Ok(Json(launched))
 }
 
 // API Handlers - Groups
@@ -2791,60 +3136,10 @@ async fn run_profile(
   }
 
   let headless = request.headless.unwrap_or(false);
-  let url = request.url;
-
-  let profile_manager = ProfileManager::instance();
-  let profiles = profile_manager
-    .list_profiles()
-    .map_err(manager_error_response)?;
-
-  let profile = profiles
-    .iter()
-    .find(|p| p.id.to_string() == id)
-    .ok_or((StatusCode::NOT_FOUND, "profile not found".to_string()))?;
-
-  if profile.is_cross_os() {
-    return Err((
-      StatusCode::BAD_REQUEST,
-      "cannot launch a cross-OS profile locally; use /run-remote".to_string(),
-    ));
-  }
-
-  // Team lock check. Routed through the shared mapper so a profile held by the
-  // user's OWN remote session is a 409 that says so, rather than a bare status
-  // with no body, which is what an automation client had to guess from.
-  crate::team_lock::acquire_team_lock_if_needed(profile)
-    .await
-    .map_err(manager_error_response)?;
-
-  let remote_debugging_port = {
-    let listener = tokio::net::TcpListener::bind("127.0.0.1:0")
-      .await
-      .map_err(manager_error_response)?;
-    let port = listener
-      .local_addr()
-      .map_err(manager_error_response)?
-      .port();
-    drop(listener);
-    port
-  };
-
-  // Use the same launch path as the main app, but force a fresh instance with
-  // remote debugging enabled so the returned port is the one the browser binds.
-  let updated_profile = crate::browser_runner::launch_browser_profile_impl(
-    state.app_handle.clone(),
-    profile.clone(),
-    url,
-    crate::browser_runner::LaunchOptions::automation(Some(remote_debugging_port), headless),
-  )
-  .await
-  .map_err(manager_error_response)?;
-
-  Ok(Json(RunProfileResponse {
-    profile_id: updated_profile.id.to_string(),
-    remote_debugging_port,
-    headless,
-  }))
+  let profile = find_profile(&id)?;
+  let launched =
+    launch_profile_automation(state.app_handle.clone(), profile, request.url, headless).await?;
+  Ok(Json(launched))
 }
 
 // API Handler - Launch this profile on a REMOTE VM of its own operating system
@@ -4668,6 +4963,7 @@ mod tests {
   fn rate_limit_only_classifies_browser_automation_routes() {
     for path in [
       "/v1/profiles/profile-id/run",
+      "/v1/profiles/profile-id/restart",
       "/v1/profiles/profile-id/open-url",
       "/v1/profiles/profile-id/kill",
       // Launching on leased remote hardware is the most expensive automation
@@ -4701,6 +4997,9 @@ mod tests {
     for (method, path) in [
       (Method::GET, "/v1/profiles/profile-id/run"),
       (Method::POST, "/v1/profiles"),
+      (Method::POST, "/v1/profiles/profile-id/clone"),
+      (Method::PUT, "/v1/profiles/profile-id/fingerprint"),
+      (Method::GET, "/v1/profiles/profile-id/fingerprint"),
       (Method::POST, "/v1/profiles/import"),
       (Method::GET, "/v1/profiles"),
       (Method::GET, "/openapi.json"),
@@ -5202,6 +5501,38 @@ mod tests {
   }
 
   #[test]
+  fn a_live_browser_blocks_clone_delete_and_fingerprint_edits_as_conflict() {
+    for message in [
+      "Cannot clone profile while browser is running. Please stop the browser first.",
+      "Cannot delete profile while browser is running. Please stop the browser first.",
+      "Cannot update Wayfern configuration while browser is running. Please stop the browser first.",
+    ] {
+      let (status, body) = manager_error_response(message);
+      assert_eq!(status, StatusCode::CONFLICT, "{message} must be a 409");
+      assert_eq!(body, message);
+    }
+  }
+
+  #[test]
+  fn clone_and_fingerprint_request_fields_stay_optional() {
+    let spec = serde_json::to_value(ApiDoc::openapi()).expect("spec serializes");
+    for schema in ["CloneProfileRequest", "UpdateFingerprintRequest"] {
+      let required = spec["components"]["schemas"][schema]["required"]
+        .as_array()
+        .cloned()
+        .unwrap_or_default();
+      assert!(
+        required.is_empty(),
+        "{schema} must have no required fields, got {required:?}"
+      );
+    }
+    assert!(
+      spec["components"]["schemas"]["ApiFingerprint"]["properties"]["fingerprint"].is_object(),
+      "ApiFingerprint must be in the served spec"
+    );
+  }
+
+  #[test]
   fn an_extension_write_names_exactly_one_source() {
     use base64::Engine as _;
 
@@ -5410,6 +5741,9 @@ mod tests {
       // is a hand-maintained allowlist, which is exactly why that drift went
       // unnoticed — every route added here must also be added below.
       "/v1/profiles/{id}/run-remote",
+      "/v1/profiles/{id}/clone",
+      "/v1/profiles/{id}/fingerprint",
+      "/v1/profiles/{id}/restart",
       "/v1/profiles/{id}/cloud-sync",
       "/v1/remote-sessions/{id}",
       // Remote-session observability and the whole cookie-bot surface. Same
@@ -5432,6 +5766,8 @@ mod tests {
     // on one path in separate `routes!` calls silently drops one of them, and
     // the spec is where that shows up.
     for (path, method) in [
+      ("/v1/profiles/{id}/fingerprint", "get"),
+      ("/v1/profiles/{id}/fingerprint", "put"),
       ("/v1/remote-sessions/{id}", "get"),
       ("/v1/remote-sessions/{id}", "delete"),
       ("/v1/cookie-bot/schedules/{profile_id}", "get"),
@@ -5620,6 +5956,7 @@ mod tests {
 
     for path in [
       "/v1/profiles/{id}/run",
+      "/v1/profiles/{id}/restart",
       "/v1/profiles/{id}/open-url",
       "/v1/profiles/{id}/kill",
       "/v1/profiles/{id}/run-remote",

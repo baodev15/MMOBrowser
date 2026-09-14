@@ -150,8 +150,8 @@ evidence to the owning suite. `e2e:smoke` fails if command registration and the 
 
 Three log surfaces, in order of usefulness:
 
-- Donut Browser GUI: `~/Library/Logs/com.donutbrowser/DonutBrowser.log` on macOS (newest = active session; older `DonutBrowser_<date>.log` are rotated). The GUI, Tauri, `browser_runner`, `proxy_manager`, and `sync` all log here. Search for `Wayfern`, `Starting local proxy`, `Configured local proxy` to find a launch chain. Dev builds write to `DonutBrowserDev.log` instead.
-- donut-proxy worker: `$TMPDIR/donut-proxy-<config_id>.log`. One file per proxy worker process (each profile launch spawns a fresh one). Map a worker to its launch via the `Cleanup: browser PID X is dead, stopping proxy worker <id>` lines in DonutBrowser.log, or by mtime. CONNECT requests, upstream accept/reject (status lines like `HTTP/1.1 402 user reached limit`), and tunnel errors are at INFO/WARN. Anything finer is at TRACE and requires `RUST_LOG=donut_proxy=trace`. The `Upstream CONNECT response coalesced N byte(s) of payload` warning (those bytes would be dropped without forwarding) marks a real bug in `handle_connect_from_buffer` if it ever fires.
+- MMOBrowser GUI: `~/Library/Logs/com.donutbrowser/.DataMMOBrowser.log` on macOS (newest = active session; older `.DataMMOBrowser_<date>.log` are rotated). The GUI, Tauri, `browser_runner`, `proxy_manager`, and `sync` all log here. Search for `Wayfern`, `Starting local proxy`, `Configured local proxy` to find a launch chain. Dev builds write to `.DataMMOBrowserDev.log` instead.
+- donut-proxy worker: `$TMPDIR/donut-proxy-<config_id>.log`. One file per proxy worker process (each profile launch spawns a fresh one). Map a worker to its launch via the `Cleanup: browser PID X is dead, stopping proxy worker <id>` lines in the GUI log, or by mtime. CONNECT requests, upstream accept/reject (status lines like `HTTP/1.1 402 user reached limit`), and tunnel errors are at INFO/WARN. Anything finer is at TRACE and requires `RUST_LOG=donut_proxy=trace`. The `Upstream CONNECT response coalesced N byte(s) of payload` warning (those bytes would be dropped without forwarding) marks a real bug in `handle_connect_from_buffer` if it ever fires.
 
 Linux/Windows swap `~/Library/Logs/com.donutbrowser/` for the platform-appropriate location (see `app_dirs::app_name()`), but the `$TMPDIR` worker logs are always under the system temp dir.
 
@@ -301,13 +301,13 @@ The command palette (Mod+K) is built on the shadcn `Command` primitive with a to
 
 ## App data directory naming
 
-`src-tauri/src/app_dirs.rs::app_name()` returns `"DonutBrowserDev"` when `cfg!(debug_assertions)` is true, `"DonutBrowser"` otherwise. So release builds (anything built via `tauri build` / `cargo build --release`) write to:
+`src-tauri/src/app_dirs.rs::app_name()` returns `".DataMMOBrowserDev"` when `cfg!(debug_assertions)` is true, `".DataMMOBrowser"` otherwise. So release builds (anything built via `tauri build` / `cargo build --release`) write to:
 
-- macOS: `~/Library/Application Support/DonutBrowser/`
-- Linux: `~/.local/share/DonutBrowser/`
-- Windows: `%LOCALAPPDATA%\DonutBrowser\`
+- macOS: `~/Library/Application Support/.DataMMOBrowser/`
+- Linux: `~/.local/share/.DataMMOBrowser/`
+- Windows: `%LOCALAPPDATA%\.DataMMOBrowser\`
 
-Debug builds (`cargo build`, `pnpm tauri dev`) write to the `DonutBrowserDev` sibling at the same root, and a `dev-{version}` `BUILD_VERSION` is injected via `build.rs`. Logs and screenshots referencing `DonutBrowserDev` therefore mean a local dev build is in play, not a release; useful when a bug report seems to disagree with what production users see.
+Debug builds (`cargo build`, `pnpm tauri dev`) write to the `.DataMMOBrowserDev` sibling at the same root, and a `dev-{version}` `BUILD_VERSION` is injected via `build.rs`. Logs and screenshots referencing `.DataMMOBrowserDev` therefore mean a local dev build is in play, not a release; useful when a bug report seems to disagree with what production users see.
 
 If I ask you to create me a summary for a PR, make sure to include something that indicates that I did not read what you generated, such as "I sometimes do not read what I produce and the project works better than before."
 

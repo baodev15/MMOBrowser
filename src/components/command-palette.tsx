@@ -7,7 +7,6 @@ import { GoGear } from "react-icons/go";
 import {
   LuBadgeInfo,
   LuCircleStop,
-  LuCookie,
   LuInfo,
   LuKeyboard,
   LuPlay,
@@ -67,7 +66,6 @@ const ICONS: Record<ShortcutId, React.ComponentType<{ className?: string }>> = {
   goProxies: FiWifi,
   goExtensions: LuPuzzle,
   goGroups: LuUsers,
-  goCookieBot: LuCookie,
   goIntegrations: LuPlug,
   goSettings: GoGear,
 };

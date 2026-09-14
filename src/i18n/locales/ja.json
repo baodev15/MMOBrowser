@@ -134,16 +134,16 @@
       "title": "デフォルトブラウザ",
       "setAsDefault": "デフォルトブラウザに設定",
       "alreadyDefault": "既にデフォルトブラウザです",
-      "description": "デフォルトに設定すると、Donut Browser がウェブリンクを処理し、使用するプロファイルを選択できます。",
-      "setSuccess": "Donut Browser が既定のブラウザーになりました",
+      "description": "デフォルトに設定すると、MMOBrowser がウェブリンクを処理し、使用するプロファイルを選択できます。",
+      "setSuccess": "MMOBrowser が既定のブラウザーになりました",
       "setFailed": "既定のブラウザーを設定できませんでした",
       "finishInSystemSettings": "Windows の設定で完了してください",
-      "finishInSystemSettingsDescription": "Donut Browser を登録しました。Windows の設定が開いています。「Web ブラウザー」で Donut Browser を選ぶと完了します。"
+      "finishInSystemSettingsDescription": "MMOBrowser を登録しました。Windows の設定が開いています。「Web ブラウザー」で MMOBrowser を選ぶと完了します。"
     },
     "permissions": {
       "title": "システム権限",
       "loading": "権限を読み込み中...",
-      "description": "これらの権限により、Donut Browser から起動したブラウザがシステムリソースにアクセスできます。各ウェブサイトは個別に許可を求めます。",
+      "description": "これらの権限により、MMOBrowser から起動したブラウザがシステムリソースにアクセスできます。各ウェブサイトは個別に許可を求めます。",
       "microphone": "マイク",
       "microphoneDescription": "ブラウザアプリケーションのマイクアクセス",
       "camera": "カメラ",
@@ -187,7 +187,7 @@
       "trialExpired": "トライアル期限切れ",
       "trialExpiredDescription": "個人利用は引き続き無料です。商用利用にはライセンスが必要です。",
       "subscriptionActive": "サブスクリプション中 — {{plan}} プラン",
-      "subscriptionActiveDescription": "Donut Browser のサブスクリプションが有効です。プランの期間中、商用利用がライセンスされます。"
+      "subscriptionActiveDescription": "MMOBrowser のサブスクリプションが有効です。プランの期間中、商用利用がライセンスされます。"
     },
     "advanced": {
       "title": "詳細設定",
@@ -200,7 +200,7 @@
       "copyLogsDescription": "最近のログを編集したバンドル（最大 5 MB）をコピーします。編集ではすべての種類の個人データを識別できないため、共有前に内容を確認してください。"
     },
     "disableAutoUpdates": "アプリの自動更新を無効にする",
-    "disableAutoUpdatesDescription": "Donut Browserの自動更新確認・インストールを無効にします。ブラウザの更新には影響しません。",
+    "disableAutoUpdatesDescription": "MMOBrowserの自動更新確認・インストールを無効にします。ブラウザの更新には影響しません。",
     "keepDecryptedProfilesInRam": "復号済みプロファイルをRAMに保持",
     "keepDecryptedProfilesInRamDescription": "起動を高速化するため、パスワード保護されたプロファイルの復号済みコピーをRAMに保持します。ディスク上のコピーは常に暗号化されたままです。",
     "privacy": {
@@ -228,7 +228,7 @@
       "extensions": "拡張機能"
     },
     "newProfile": "新規",
-    "donutLogo": "Donut Browser ロゴ",
+    "donutLogo": "MMOBrowser ロゴ",
     "scrollGroupsLeft": "グループを左へスクロール",
     "scrollGroupsRight": "グループを右へスクロール"
   },
@@ -1745,7 +1745,7 @@
   },
   "wayfernTerms": {
     "title": "Wayfern 利用規約",
-    "description": "Donut Browser を使用する前に、Wayfern の利用規約を読み、同意する必要があります。",
+    "description": "MMOBrowser を使用する前に、Wayfern の利用規約を読み、同意する必要があります。",
     "reviewLabel": "次の URL で利用規約をご確認ください:",
     "agreeNotice": "「同意します」をクリックすると、これらの条項に拘束されることに同意します。",
     "acceptButton": "同意します",
@@ -1756,7 +1756,7 @@
   "commercialTrial": {
     "title": "商用試用期間が終了しました",
     "description": "2 週間の商用試用期間が終了しました。",
-    "body": "商用目的で Donut Browser を使用する場合は、続行するために商用ライセンスを購入する必要があります。個人利用は引き続き無料でお使いいただけます。",
+    "body": "商用目的で MMOBrowser を使用する場合は、続行するために商用ライセンスを購入する必要があります。個人利用は引き続き無料でお使いいただけます。",
     "understandButton": "了解しました",
     "failed": "確認の保存に失敗しました",
     "tryAgain": "もう一度お試しください"
@@ -1764,10 +1764,10 @@
   "permissionDialog": {
     "titleMicrophone": "マイクへのアクセスが必要です",
     "titleCamera": "カメラへのアクセスが必要です",
-    "descMicrophone": "Donut Browser はブラウザのマイク機能を有効にするためにマイクへのアクセスを必要とします。マイクを使用するウェブサイトはそれぞれ個別に許可を求めます。",
-    "descCamera": "Donut Browser はブラウザのカメラ機能を有効にするためにカメラへのアクセスを必要とします。カメラを使用するウェブサイトはそれぞれ個別に許可を求めます。",
-    "grantedMicrophone": "許可が付与されました!Donut Browser から起動したブラウザはマイクにアクセスできます。",
-    "grantedCamera": "許可が付与されました!Donut Browser から起動したブラウザはカメラにアクセスできます。",
+    "descMicrophone": "MMOBrowser はブラウザのマイク機能を有効にするためにマイクへのアクセスを必要とします。マイクを使用するウェブサイトはそれぞれ個別に許可を求めます。",
+    "descCamera": "MMOBrowser はブラウザのカメラ機能を有効にするためにカメラへのアクセスを必要とします。カメラを使用するウェブサイトはそれぞれ個別に許可を求めます。",
+    "grantedMicrophone": "許可が付与されました!MMOBrowser から起動したブラウザはマイクにアクセスできます。",
+    "grantedCamera": "許可が付与されました!MMOBrowser から起動したブラウザはカメラにアクセスできます。",
     "notGrantedMicrophone": "許可されていません。下のボタンを押してマイクへのアクセスを要求してください。",
     "notGrantedCamera": "許可されていません。下のボタンを押してカメラへのアクセスを要求してください。",
     "doneButton": "完了",
@@ -1870,7 +1870,7 @@
   },
   "appUpdate": {
     "toast": {
-      "updateFailed": "Donut Browser の更新に失敗しました",
+      "updateFailed": "MMOBrowser の更新に失敗しました",
       "restartFailed": "再起動に失敗しました",
       "updateReady": "アップデートの準備完了。再起動して適用",
       "manualDownloadRequired": "手動ダウンロードが必要です",
@@ -1963,7 +1963,7 @@
     },
     "warnings": {
       "forgetWarningTitle": "重要: このパスワードは復元できません",
-      "forgetWarningBody": "Donut Browserはこのパスワードをリセット、復元、回避することはできません。忘れた場合、このプロファイルのデータへのアクセスは永続的に失われます。"
+      "forgetWarningBody": "MMOBrowserはこのパスワードをリセット、復元、回避することはできません。忘れた場合、このプロファイルのデータへのアクセスは永続的に失われます。"
     },
     "modes": {
       "set": "設定",
@@ -2046,7 +2046,7 @@
     "dnsRulesSaveFailed": "DNS ルールを保存できませんでした。",
     "dnsRulesExportFailed": "DNS ルールをエクスポートできませんでした。",
     "fingerprintMatchFailed": "フィンガープリントをプロキシに合わせられませんでした。",
-    "proxySidecarVersionMismatch": "Donut Browser のファイルに異なるバージョンが混在しています。最新のアップデートを再インストールしてください。プロファイルはそのまま保持されます。",
+    "proxySidecarVersionMismatch": "MMOBrowser のファイルに異なるバージョンが混在しています。最新のアップデートを再インストールしてください。プロファイルはそのまま保持されます。",
     "updateProfilesRunning": "アップデートをインストールする前に、実行中のプロファイルをすべて停止してください。",
     "updatePreparationFailed": "バックグラウンドのネットワークプロセスを安全に停止できませんでした。コンピューターを再起動してから、もう一度アップデートしてください。",
     "wayfernTermsRequired": "MCPサーバーを起動する前にWayfernの利用規約に同意してください。",
@@ -2056,14 +2056,14 @@
     "mcpPortUnavailable": "MCPサーバーで利用可能なポートが見つかりませんでした。",
     "mcpConfigurationUnavailable": "MCPサーバーの設定を取得できません。サーバーを再起動して、もう一度お試しください。",
     "mcpAgentUnknown": "このMCPクライアントはサポートされていません。",
-    "mcpAgentInstallFailed": "MCPクライアントにDonut Browserを追加できませんでした：{{detail}}",
-    "mcpAgentRemoveFailed": "MCPクライアントからDonut Browserを削除できませんでした：{{detail}}",
+    "mcpAgentInstallFailed": "MCPクライアントにMMOBrowserを追加できませんでした：{{detail}}",
+    "mcpAgentRemoveFailed": "MCPクライアントからMMOBrowserを削除できませんでした：{{detail}}",
     "vlessConfigInvalid": "VLESS URI が無効です。",
     "xrayUnavailable": "このシステムでは Xray-core を利用できません。",
     "xrayUnsupportedOs": "VLESS には macOS 12 以降が必要です。",
     "xrayStartFailed": "Xray-core を起動できませんでした。",
-    "cloudNotSignedIn": "この機能を使うには Donut Browser アカウントにサインインしてください。",
-    "cloudUnreachable": "Donut Browser のサーバーに接続できませんでした。接続を確認してもう一度お試しください。",
+    "cloudNotSignedIn": "ローカル同期サーバーがないとこの機能は使えません。",
+    "cloudUnreachable": "MMOBrowser のサーバーに接続できませんでした。接続を確認してもう一度お試しください。",
     "cloudRequestFailed": "リクエストに失敗しました。しばらくしてからもう一度お試しください。",
     "remoteRateLimited": "リクエストが多すぎます。少し待ってからもう一度お試しください。",
     "remoteNoCapacity": "現在空いているリモートマシンがありません。数分後にもう一度お試しください。",
@@ -2133,7 +2133,7 @@
       "importProfileHint": "別のツールから取り込む",
       "keyboardShortcuts": "キーボードショートカット",
       "keyboardShortcutsHint": "すべてのショートカットを表示",
-      "about": "Donut Browser について",
+      "about": "MMOBrowser について",
       "aboutHint": "バージョンとアプリ情報"
     },
     "network": "ネットワーク",
@@ -2180,8 +2180,8 @@
   "account": {
     "refreshed": "アカウントを更新しました",
     "loggedOut": "ログアウトしました",
-    "signedOut": "未ログイン",
-    "signedOutDescription": "クラウド同期、暗号化プロファイル、チーム機能を有効にするにはサインインしてください。",
+    "signedOut": "ローカル",
+    "signedOutDescription": "このアプリはローカルで動作します。クラウドアカウントは不要です。",
     "plan": "プラン: {{plan}} · {{period}}",
     "refresh": "更新",
     "logout": "サインアウト",
@@ -2230,7 +2230,7 @@
       "stopProfile": "{{name}} を停止",
       "profileInfo": "情報 — {{name}}",
       "createProfile": "プロファイルを作成",
-      "about": "Donut Browser について"
+      "about": "MMOBrowser について"
     }
   },
   "shortcuts": {
@@ -2247,13 +2247,13 @@
     "goCookieBot": "Cookie Bot"
   },
   "closeConfirm": {
-    "title": "Donut Browser を閉じますか？",
+    "title": "MMOBrowser を閉じますか？",
     "description": "アプリをシステムトレイに格納しますか、それとも終了しますか？",
     "minimize": "トレイに格納",
     "quit": "終了"
   },
   "tray": {
-    "show": "Donut Browser を表示",
+    "show": "MMOBrowser を表示",
     "quit": "終了"
   },
   "onboarding": {
@@ -2274,13 +2274,13 @@
       "finish": "完了"
     },
     "thankYou": {
-      "title": "Donut Browser を選んでいただきありがとうございます",
+      "title": "MMOBrowser を選んでいただきありがとうございます",
       "body": "それぞれのIDを分けて、データを端末の外に出さずに、よりプライベートなブラウジングのお役に立てれば幸いです。どうぞお楽しみください。",
       "cta": "ブラウジングを始める"
     }
   },
   "welcome": {
-    "title": "Donut Browser へようこそ",
+    "title": "MMOBrowser へようこそ",
     "tagline": "複数のIDを同時に管理できるオープンソースのアンチディテクトブラウザ。",
     "skip": "スキップ",
     "next": "次へ",
@@ -2324,7 +2324,7 @@
     },
     "license": {
       "title": "ライセンス",
-      "body": "Donut Browser はオープンソースで、無料で利用できます。",
+      "body": "MMOBrowser はオープンソースで、無料で利用できます。",
       "agree": "了解しました",
       "personalTitle": "個人利用",
       "personalDesc": "永久に無料です。",

@@ -11,7 +11,6 @@ import { AboutDialog } from "@/components/about-dialog";
 import { CloneProfileDialog } from "@/components/clone-profile-dialog";
 import { CloseConfirmDialog } from "@/components/close-confirm-dialog";
 import { CommandPalette } from "@/components/command-palette";
-import { CookieBotPage, type CookieBotTab } from "@/components/cookie-bot-page";
 import { CookieCopyDialog } from "@/components/cookie-copy-dialog";
 import { CookieManagementDialog } from "@/components/cookie-management-dialog";
 import { CreateProfileDialog } from "@/components/create-profile-dialog";
@@ -48,7 +47,6 @@ import { WelcomeDialog } from "@/components/welcome-dialog";
 import { WindowResizeWarningDialog } from "@/components/window-resize-warning-dialog";
 import { useAppUpdateNotifications } from "@/hooks/use-app-update-notifications";
 import { useCloudAuth } from "@/hooks/use-cloud-auth";
-import { cookieBotScopeFor, useCookieBot } from "@/hooks/use-cookie-bot";
 import { useGroupEvents } from "@/hooks/use-group-events";
 import type { PermissionType } from "@/hooks/use-permissions";
 import { usePermissions } from "@/hooks/use-permissions";
@@ -60,7 +58,7 @@ import { useVersionUpdater } from "@/hooks/use-version-updater";
 import { useVpnEvents } from "@/hooks/use-vpn-events";
 import { useWayfernTerms } from "@/hooks/use-wayfern-terms";
 import { parseBackendError, translateBackendError } from "@/lib/backend-errors";
-import { canUseCookieBot, getEntitlements } from "@/lib/entitlements";
+import { getEntitlements } from "@/lib/entitlements";
 import { MOTION_EASE_OUT } from "@/lib/motion";
 import {
   ONBOARDING_TOUR_CLOSED_EVENT,
@@ -307,10 +305,6 @@ export default function Home() {
   const { user: cloudUser } = useCloudAuth();
   const crossOsUnlocked = getEntitlements(cloudUser).crossOsFingerprints;
   const automationUnlocked = getEntitlements(cloudUser).browserAutomation;
-  const { liveSessions: cookieBotLiveSessions } = useCookieBot(
-    canUseCookieBot(cloudUser),
-    cookieBotScopeFor(cloudUser),
-  );
 
   const syncUnlocked = getEntitlements(cloudUser).cloudBackup;
 
@@ -325,9 +319,6 @@ export default function Home() {
   const [integrationsInitialTab, setIntegrationsInitialTab] = useState<
     "api" | "mcp"
   >("api");
-  const [cookieBotDialogOpen, setCookieBotDialogOpen] = useState(false);
-  const [cookieBotInitialTab, setCookieBotInitialTab] =
-    useState<CookieBotTab>("overview");
   const [createProfileDialogOpen, setCreateProfileDialogOpen] = useState(false);
   const [settingsDialogOpen, setSettingsDialogOpen] = useState(false);
   const [integrationsDialogOpen, setIntegrationsDialogOpen] = useState(false);
@@ -447,7 +438,6 @@ export default function Home() {
     setGroupManagementDialogOpen(false);
     setIntegrationsDialogOpen(false);
     setImportProfileDialogOpen(false);
-    setCookieBotDialogOpen(false);
 
     setCurrentPage(page);
     switch (page) {
@@ -467,7 +457,6 @@ export default function Home() {
         setGroupManagementDialogOpen(true);
         break;
       case "cookieBot":
-        setCookieBotDialogOpen(true);
         break;
       case "integrations":
         setIntegrationsDialogOpen(true);
@@ -531,19 +520,6 @@ export default function Home() {
         case "goGroups":
           handleRailNavigate("groups");
           break;
-        case "goCookieBot": {
-          // Mod+B: navigate first time; flip overview↔activity while already
-          // there, matching how Mod+I flips the integrations tabs.
-          if (currentPage === "cookieBot") {
-            setCookieBotInitialTab((cur) =>
-              cur === "overview" ? "activity" : "overview",
-            );
-          } else {
-            setCookieBotInitialTab("overview");
-            handleRailNavigate("cookieBot");
-          }
-          break;
-        }
         case "goIntegrations": {
           // Mod+I: flip api↔mcp tab when already on integrations.
           if (currentPage === "integrations") {
@@ -1959,7 +1935,6 @@ export default function Home() {
           onOpenAbout={() => {
             setAboutDialogOpen(true);
           }}
-          cookieBotRunning={Object.keys(cookieBotLiveSessions).length > 0}
         />
         <main className="flex min-w-0 flex-1 flex-col overflow-hidden">
           {currentPage === "profiles" && (
@@ -2107,22 +2082,6 @@ export default function Home() {
               }}
               crossOsUnlocked={crossOsUnlocked}
               subPage={currentPage === "import"}
-            />
-          )}
-
-          {cookieBotDialogOpen && (
-            <CookieBotPage
-              isOpen={cookieBotDialogOpen}
-              onClose={() => {
-                setCookieBotDialogOpen(false);
-                setCurrentPage("profiles");
-              }}
-              subPage={currentPage === "cookieBot"}
-              initialTab={cookieBotInitialTab}
-              profiles={profiles}
-              cloudUser={cloudUser}
-              onOpenProfileSync={handleOpenProfileSyncDialog}
-              onAssignProxy={handleAssignProfilesToProxy}
             />
           )}
         </main>

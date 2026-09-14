@@ -4,13 +4,13 @@ const UNLOCKED: Entitlements = {
   active: true,
   browserAutomation: true,
   crossOsFingerprints: true,
-  cloudBackup: true,
-  teamCollaboration: true,
-  cookieBot: true,
-  remoteInteractive: true,
+  cloudBackup: false,
+  teamCollaboration: false,
+  cookieBot: false,
+  remoteInteractive: false,
   profileLimit: Number.POSITIVE_INFINITY,
   requestsPerHour: Number.POSITIVE_INFINITY,
-  remoteBrowserHours: Number.POSITIVE_INFINITY,
+  remoteBrowserHours: 0,
 };
 
 export function getEntitlements(
@@ -20,7 +20,8 @@ export function getEntitlements(
 }
 
 export function canUseCookieBot(_user: CloudUser | null | undefined): boolean {
-  return true;
+  // Cookie Bot is a Donut cloud fleet feature and is not offered without server login.
+  return false;
 }
 
 export function isTeamOwner(_user: CloudUser | null | undefined): boolean {

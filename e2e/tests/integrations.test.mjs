@@ -93,6 +93,9 @@ test("authenticated REST API serves its complete OpenAPI contract and CRUD lifec
     for (const required of [
       "/v1/profiles",
       "/v1/profiles/{id}/run",
+      "/v1/profiles/{id}/clone",
+      "/v1/profiles/{id}/fingerprint",
+      "/v1/profiles/{id}/restart",
       "/v1/groups",
       "/v1/proxies",
       "/v1/vpns/{id}/export",

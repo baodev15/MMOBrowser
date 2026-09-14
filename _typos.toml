@@ -16,3 +16,6 @@ nd = "nd"
 [default.extend-identifiers]
 # Chrome Web Store extension name in the known-VPN list.
 VeePN = "VeePN"
+MMOBrowser = "MMOBrowser"
+DataMMOBrowser = "DataMMOBrowser"
+DataMMOBrowserDev = "DataMMOBrowserDev"

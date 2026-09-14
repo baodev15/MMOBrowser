@@ -24,6 +24,14 @@
     "license": "MIT"
   },
   {
+    "name": "@babel/helper-module-imports",
+    "license": "MIT"
+  },
+  {
+    "name": "@babel/helper-module-transforms",
+    "license": "MIT"
+  },
+  {
     "name": "@babel/helper-string-parser",
     "license": "MIT"
   },
@@ -81,6 +89,10 @@
   },
   {
     "name": "@jridgewell/gen-mapping",
+    "license": "MIT"
+  },
+  {
+    "name": "@jridgewell/remapping",
     "license": "MIT"
   },
   {
@@ -436,15 +448,7 @@
     "license": "MIT"
   },
   {
-    "name": "@types/gensync",
-    "license": "MIT"
-  },
-  {
     "name": "@types/js-cookie",
-    "license": "MIT"
-  },
-  {
-    "name": "@types/jsesc",
     "license": "MIT"
   },
   {
@@ -717,10 +721,6 @@
   },
   {
     "name": "bytemuck",
-    "license": "Zlib OR Apache-2.0 OR MIT"
-  },
-  {
-    "name": "bytemuck_derive",
     "license": "Zlib OR Apache-2.0 OR MIT"
   },
   {
@@ -1060,6 +1060,10 @@
     "license": "Apache-2.0 OR MIT"
   },
   {
+    "name": "debug",
+    "license": "MIT"
+  },
+  {
     "name": "decimal.js-light",
     "license": "MIT"
   },
@@ -1198,10 +1202,6 @@
   {
     "name": "embed_plist",
     "license": "Apache-2.0 OR MIT"
-  },
-  {
-    "name": "empathic",
-    "license": "MIT"
   },
   {
     "name": "encoding_rs",
@@ -1496,6 +1496,10 @@
     "license": "Apache-2.0 OR MIT"
   },
   {
+    "name": "has-flag",
+    "license": "MIT"
+  },
+  {
     "name": "hash32",
     "license": "Apache-2.0 OR MIT"
   },
@@ -1645,10 +1649,6 @@
   },
   {
     "name": "immer",
-    "license": "MIT"
-  },
-  {
-    "name": "import-meta-resolve",
     "license": "MIT"
   },
   {
@@ -1829,7 +1829,7 @@
   },
   {
     "name": "lru-cache",
-    "license": "BlueOak-1.0.0"
+    "license": "ISC"
   },
   {
     "name": "lucide-react",
@@ -1910,6 +1910,10 @@
   {
     "name": "moxcms",
     "license": "BSD-3-Clause OR Apache-2.0"
+  },
+  {
+    "name": "ms",
+    "license": "MIT"
   },
   {
     "name": "msi",
@@ -2074,10 +2078,6 @@
   {
     "name": "objc2-web-kit",
     "license": "Zlib OR Apache-2.0 OR MIT"
-  },
-  {
-    "name": "obug",
-    "license": "MIT"
   },
   {
     "name": "onborda",
@@ -2728,6 +2728,10 @@
     "license": "BSD-3-Clause"
   },
   {
+    "name": "supports-color",
+    "license": "MIT"
+  },
+  {
     "name": "swift-rs",
     "license": "Apache-2.0 OR MIT"
   },
@@ -3318,6 +3322,10 @@
   {
     "name": "y4m",
     "license": "MIT"
+  },
+  {
+    "name": "yallist",
+    "license": "ISC"
   },
   {
     "name": "yoke",

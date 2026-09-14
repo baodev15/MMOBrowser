@@ -4,7 +4,7 @@ version = "0.30.0"
 description = "Simple Yet Powerful Anti-Detect Browser"
 authors = ["zhom@github"]
 edition = "2021"
-default-run = "donutbrowser"
+default-run = "MMOBrowser"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -17,7 +17,7 @@ crate-type = ["staticlib", "cdylib", "rlib"]
 doctest = false
 
 [[bin]]
-name = "donutbrowser"
+name = "MMOBrowser"
 path = "src/main.rs"
 
 [[bin]]
@@ -26,7 +26,6 @@ path = "src/bin/proxy_server.rs"
 
 [build-dependencies]
 tauri-build = { version = "2", features = [] }
-resvg = "0.48"
 
 [dependencies]
 serde_json = "1"

@@ -134,16 +134,16 @@
       "title": "Varsayılan Tarayıcı",
       "setAsDefault": "Varsayılan Tarayıcı Olarak Ayarla",
       "alreadyDefault": "Zaten Varsayılan Tarayıcı",
-      "description": "Varsayılan olarak ayarlandığında, Donut Browser web bağlantılarını yönetir ve hangi profilin kullanılacağını seçmenize olanak tanır.",
-      "setSuccess": "Donut Browser artık varsayılan tarayıcınız",
+      "description": "Varsayılan olarak ayarlandığında, MMOBrowser web bağlantılarını yönetir ve hangi profilin kullanılacağını seçmenize olanak tanır.",
+      "setSuccess": "MMOBrowser artık varsayılan tarayıcınız",
       "setFailed": "Varsayılan tarayıcı ayarlanamadı",
       "finishInSystemSettings": "Windows Ayarları'nda tamamlayın",
-      "finishInSystemSettingsDescription": "Donut Browser kaydedildi. Windows Ayarları açıldı: tamamlamak için Web tarayıcısı bölümünden Donut Browser'ı seçin."
+      "finishInSystemSettingsDescription": "MMOBrowser kaydedildi. Windows Ayarları açıldı: tamamlamak için Web tarayıcısı bölümünden MMOBrowser'ı seçin."
     },
     "permissions": {
       "title": "Sistem İzinleri",
       "loading": "İzinler yükleniyor...",
-      "description": "Bu izinler, Donut Browser'dan başlatılan tarayıcıların sistem kaynaklarına erişmesine olanak tanır. Her web sitesi yine de sizden ayrı ayrı izin isteyecektir.",
+      "description": "Bu izinler, MMOBrowser'dan başlatılan tarayıcıların sistem kaynaklarına erişmesine olanak tanır. Her web sitesi yine de sizden ayrı ayrı izin isteyecektir.",
       "microphone": "Mikrofon",
       "microphoneDescription": "Tarayıcı uygulamaları için mikrofon erişimi",
       "camera": "Kamera",
@@ -187,7 +187,7 @@
       "trialExpired": "Deneme süresi doldu",
       "trialExpiredDescription": "Kişisel kullanım ücretsiz kalır. Ticari kullanım lisans gerektirir.",
       "subscriptionActive": "Abone — {{plan}} planı",
-      "subscriptionActiveDescription": "Donut Browser aboneliğiniz etkin. Ticari kullanım, planınızın süresi boyunca lisanslıdır."
+      "subscriptionActiveDescription": "MMOBrowser aboneliğiniz etkin. Ticari kullanım, planınızın süresi boyunca lisanslıdır."
     },
     "advanced": {
       "title": "Gelişmiş",
@@ -200,7 +200,7 @@
       "copyLogsDescription": "Son günlüklerin hassas verileri ayıklanmış bir paketini kopyalar (en fazla 5 MB). Ayıklama her tür kişisel veriyi belirleyemeyeceğinden paylaşmadan önce inceleyin."
     },
     "disableAutoUpdates": "Uygulama Otomatik Güncellemelerini Devre Dışı Bırak",
-    "disableAutoUpdatesDescription": "Uygulamanın Donut Browser güncellemelerini otomatik olarak denetlemesini ve yüklemesini engelleyin. Tarayıcı güncellemeleri bundan etkilenmez.",
+    "disableAutoUpdatesDescription": "Uygulamanın MMOBrowser güncellemelerini otomatik olarak denetlemesini ve yüklemesini engelleyin. Tarayıcı güncellemeleri bundan etkilenmez.",
     "keepDecryptedProfilesInRam": "Şifresi Çözülmüş Profilleri RAM'de Tut",
     "keepDecryptedProfilesInRamDescription": "Daha hızlı başlatma için parola korumalı profillerin şifresi çözülmüş RAM kopyasını başlatmalar arasında koruyun. Diskteki kopya her durumda şifreli kalır.",
     "privacy": {
@@ -228,7 +228,7 @@
       "extensions": "Uzantılar"
     },
     "newProfile": "Yeni",
-    "donutLogo": "Donut Browser logosu",
+    "donutLogo": "MMOBrowser logosu",
     "scrollGroupsLeft": "Grupları sola kaydır",
     "scrollGroupsRight": "Grupları sağa kaydır"
   },
@@ -1303,7 +1303,7 @@
     "launchHook": {
       "title": "Başlatma Kancası URL'si",
       "label": "Başlatma Kancası URL'si",
-      "description": "Donut Browser, profil her başlatıldığında bu URL'ye bir GET isteği gönderir.",
+      "description": "MMOBrowser, profil her başlatıldığında bu URL'ye bir GET isteği gönderir.",
       "placeholder": "https://example.com/hooks/profile-launch",
       "invalidUrlHint": "Geçerli bir http:// veya https:// URL'si girin."
     },
@@ -1745,7 +1745,7 @@
   },
   "wayfernTerms": {
     "title": "Wayfern Şartlar ve Koşulları",
-    "description": "Donut Browser'ı kullanmadan önce Wayfern'ün Şartlar ve Koşullarını okuyup kabul etmelisiniz.",
+    "description": "MMOBrowser'ı kullanmadan önce Wayfern'ün Şartlar ve Koşullarını okuyup kabul etmelisiniz.",
     "reviewLabel": "Lütfen Şartlar ve Koşulları şu adresten inceleyin:",
     "agreeNotice": "\"Kabul Ediyorum\"a tıklayarak bu şartlara bağlı kalmayı kabul edersiniz.",
     "acceptButton": "Kabul Ediyorum",
@@ -1756,7 +1756,7 @@
   "commercialTrial": {
     "title": "Ticari Deneme Süresi Doldu",
     "description": "2 haftalık ticari deneme süreniz sona erdi.",
-    "body": "Donut Browser'ı iş amaçlı kullanıyorsanız devam etmek için ticari lisans satın almanız gerekir. Kişisel kullanım için ücretsiz olarak kullanmaya devam edebilirsiniz.",
+    "body": "MMOBrowser'ı iş amaçlı kullanıyorsanız devam etmek için ticari lisans satın almanız gerekir. Kişisel kullanım için ücretsiz olarak kullanmaya devam edebilirsiniz.",
     "understandButton": "Anladım",
     "failed": "Onay kaydedilemedi",
     "tryAgain": "Lütfen yeniden deneyin"
@@ -1764,10 +1764,10 @@
   "permissionDialog": {
     "titleMicrophone": "Mikrofon Erişimi Gerekli",
     "titleCamera": "Kamera Erişimi Gerekli",
-    "descMicrophone": "Donut Browser, web tarayıcılarında mikrofon işlevini etkinleştirmek için mikrofonunuza erişmelidir. Mikrofonunuzu kullanmak isteyen her web sitesi yine de sizden ayrıca izin isteyecektir.",
-    "descCamera": "Donut Browser, web tarayıcılarında kamera işlevini etkinleştirmek için kameranıza erişmelidir. Kameranızı kullanmak isteyen her web sitesi yine de sizden ayrıca izin isteyecektir.",
-    "grantedMicrophone": "İzin verildi! Donut Browser'dan başlatılan tarayıcılar artık mikrofonunuza erişebilir.",
-    "grantedCamera": "İzin verildi! Donut Browser'dan başlatılan tarayıcılar artık kameranıza erişebilir.",
+    "descMicrophone": "MMOBrowser, web tarayıcılarında mikrofon işlevini etkinleştirmek için mikrofonunuza erişmelidir. Mikrofonunuzu kullanmak isteyen her web sitesi yine de sizden ayrıca izin isteyecektir.",
+    "descCamera": "MMOBrowser, web tarayıcılarında kamera işlevini etkinleştirmek için kameranıza erişmelidir. Kameranızı kullanmak isteyen her web sitesi yine de sizden ayrıca izin isteyecektir.",
+    "grantedMicrophone": "İzin verildi! MMOBrowser'dan başlatılan tarayıcılar artık mikrofonunuza erişebilir.",
+    "grantedCamera": "İzin verildi! MMOBrowser'dan başlatılan tarayıcılar artık kameranıza erişebilir.",
     "notGrantedMicrophone": "İzin verilmedi. Mikrofonunuza erişim istemek için aşağıdaki düğmeye tıklayın.",
     "notGrantedCamera": "İzin verilmedi. Kameranıza erişim istemek için aşağıdaki düğmeye tıklayın.",
     "doneButton": "Bitti",
@@ -1870,7 +1870,7 @@
   },
   "appUpdate": {
     "toast": {
-      "updateFailed": "Donut Browser güncellenemedi",
+      "updateFailed": "MMOBrowser güncellenemedi",
       "restartFailed": "Yeniden başlatılamadı",
       "updateReady": "Güncelleme hazır, uygulamak için yeniden başlatın",
       "manualDownloadRequired": "Elle indirme gerekli",
@@ -1963,7 +1963,7 @@
     },
     "warnings": {
       "forgetWarningTitle": "Önemli: bu parola kurtarılamaz",
-      "forgetWarningBody": "Donut Browser bu parolayı sıfırlayamaz, kurtaramaz veya atlayamaz. Unutursanız bu profilin verilerine erişimi kalıcı olarak kaybedersiniz."
+      "forgetWarningBody": "MMOBrowser bu parolayı sıfırlayamaz, kurtaramaz veya atlayamaz. Unutursanız bu profilin verilerine erişimi kalıcı olarak kaybedersiniz."
     },
     "modes": {
       "set": "Belirle",
@@ -2046,9 +2046,9 @@
     "dnsRulesSaveFailed": "DNS kuralları kaydedilemedi.",
     "dnsRulesExportFailed": "DNS kuralları dışa aktarılamadı.",
     "fingerprintMatchFailed": "Parmak izi proxy'ye eşlenemedi.",
-    "proxySidecarVersionMismatch": "Bazı Donut Browser dosyaları farklı sürümlere ait. En son güncellemeyi yeniden yükleyin; profilleriniz güvende kalır.",
+    "proxySidecarVersionMismatch": "Bazı MMOBrowser dosyaları farklı sürümlere ait. En son güncellemeyi yeniden yükleyin; profilleriniz güvende kalır.",
     "updateProfilesRunning": "Güncellemeyi yüklemeden önce çalışan tüm profilleri durdurun.",
-    "updatePreparationFailed": "Donut Browser arka plandaki bir ağ işlemini güvenli şekilde durduramadı. Bilgisayarınızı yeniden başlatıp güncellemeyi tekrar deneyin.",
+    "updatePreparationFailed": "MMOBrowser arka plandaki bir ağ işlemini güvenli şekilde durduramadı. Bilgisayarınızı yeniden başlatıp güncellemeyi tekrar deneyin.",
     "wayfernTermsRequired": "MCP sunucusunu başlatmadan önce Wayfern Hüküm ve Koşullarını kabul edin.",
     "apiPortUnavailable": "API sunucusu kullanılabilir bir bağlantı noktası bulamadı.",
     "mcpServerAlreadyRunning": "MCP sunucusu zaten çalışıyor.",
@@ -2056,14 +2056,14 @@
     "mcpPortUnavailable": "MCP sunucusu kullanılabilir bir bağlantı noktası bulamadı.",
     "mcpConfigurationUnavailable": "MCP sunucusu yapılandırması kullanılamıyor. Sunucuyu yeniden başlatıp tekrar deneyin.",
     "mcpAgentUnknown": "Bu MCP istemcisi desteklenmiyor.",
-    "mcpAgentInstallFailed": "Donut Browser MCP istemcisine eklenemedi: {{detail}}",
-    "mcpAgentRemoveFailed": "Donut Browser MCP istemcisinden kaldırılamadı: {{detail}}",
+    "mcpAgentInstallFailed": "MMOBrowser MCP istemcisine eklenemedi: {{detail}}",
+    "mcpAgentRemoveFailed": "MMOBrowser MCP istemcisinden kaldırılamadı: {{detail}}",
     "vlessConfigInvalid": "VLESS URI'si geçersiz.",
     "xrayUnavailable": "Xray-core bu sistemde kullanılamıyor.",
     "xrayUnsupportedOs": "VLESS için macOS 12 veya sonraki bir sürüm gerekir.",
     "xrayStartFailed": "Xray-core başlatılamadı.",
-    "cloudNotSignedIn": "Bunu kullanmak için Donut Browser hesabınıza giriş yapın.",
-    "cloudUnreachable": "Donut Browser sunucularına ulaşılamadı. Bağlantınızı kontrol edip tekrar deneyin.",
+    "cloudNotSignedIn": "Bu özellik yerel bir senkronizasyon sunucusu olmadan kullanılamaz.",
+    "cloudUnreachable": "MMOBrowser sunucularına ulaşılamadı. Bağlantınızı kontrol edip tekrar deneyin.",
     "cloudRequestFailed": "İstek başarısız oldu. Birazdan tekrar deneyin.",
     "remoteRateLimited": "Çok fazla istek. Biraz bekleyip tekrar deneyin.",
     "remoteNoCapacity": "Şu anda boş uzak makine yok. Birkaç dakika sonra tekrar deneyin.",
@@ -2133,7 +2133,7 @@
       "importProfileHint": "Başka bir araçtan profil getirin",
       "keyboardShortcuts": "Klavye kısayolları",
       "keyboardShortcutsHint": "Tüm kısayolları görüntüle",
-      "about": "Donut Browser Hakkında",
+      "about": "MMOBrowser Hakkında",
       "aboutHint": "Sürüm ve uygulama bilgileri"
     },
     "network": "Ağ",
@@ -2180,8 +2180,8 @@
   "account": {
     "refreshed": "Hesap yenilendi",
     "loggedOut": "Çıkış yapıldı",
-    "signedOut": "Oturum kapatıldı",
-    "signedOutDescription": "Bulut eşitlemesi, şifreli profiller ve ekip özelliklerini etkinleştirmek için oturum açın.",
+    "signedOut": "Yerel",
+    "signedOutDescription": "Bu uygulama yerelde çalışır. Bulut hesabı gerekmez.",
     "plan": "Plan: {{plan}} · {{period}}",
     "refresh": "Yenile",
     "logout": "Çıkış yap",
@@ -2230,7 +2230,7 @@
       "stopProfile": "{{name}} profilini durdur",
       "profileInfo": "Bilgi — {{name}}",
       "createProfile": "Profil oluştur",
-      "about": "Donut Browser Hakkında"
+      "about": "MMOBrowser Hakkında"
     }
   },
   "shortcuts": {
@@ -2247,13 +2247,13 @@
     "goCookieBot": "Cookie Bot"
   },
   "closeConfirm": {
-    "title": "Donut Browser kapatılsın mı?",
+    "title": "MMOBrowser kapatılsın mı?",
     "description": "Uygulamayı sistem tepsisine göndermek mi yoksa çıkmak mı istersiniz?",
     "minimize": "Tepsiye Küçült",
     "quit": "Çık"
   },
   "tray": {
-    "show": "Donut Browser'ı Göster",
+    "show": "MMOBrowser'ı Göster",
     "quit": "Çık"
   },
   "onboarding": {
@@ -2274,13 +2274,13 @@
       "finish": "Bitir"
     },
     "thankYou": {
-      "title": "Donut Browser'ı seçtiğiniz için teşekkürler",
+      "title": "MMOBrowser'ı seçtiğiniz için teşekkürler",
       "body": "Umarız gezinmenizi daha gizli hale getirmenize yardımcı olur — her kimlik kendine ait kalır ve hiçbir şey makinenizden dışarı çıkmaz. İyi kullanımlar.",
       "cta": "Gezinmeye başla"
     }
   },
   "welcome": {
-    "title": "Donut Browser'a Hoş Geldiniz",
+    "title": "MMOBrowser'a Hoş Geldiniz",
     "tagline": "Aynı anda birçok kimliği yönetmek için açık kaynaklı bir anti-detect tarayıcı.",
     "skip": "Atla",
     "next": "İleri",
@@ -2324,7 +2324,7 @@
     },
     "license": {
       "title": "Lisanslama",
-      "body": "Donut Browser açık kaynaklıdır ve kullanımı ücretsizdir.",
+      "body": "MMOBrowser açık kaynaklıdır ve kullanımı ücretsizdir.",
       "agree": "Anladım",
       "personalTitle": "Kişisel kullanım",
       "personalDesc": "Sonsuza dek ücretsiz.",

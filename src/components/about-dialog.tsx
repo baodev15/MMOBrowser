@@ -223,7 +223,7 @@ export function AboutDialog({ isOpen, onClose }: AboutDialogProps) {
                 </button>
 
                 <div className="text-center">
-                  <p className="text-lg font-semibold">Donut Browser</p>
+                  <p className="text-lg font-semibold">MMOBrowser</p>
                   {systemInfo && (
                     <>
                       <p className="text-sm text-muted-foreground">
