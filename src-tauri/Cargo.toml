@@ -48,7 +48,7 @@ directories = "6"
 reqwest = { version = "0.13", default-features = false, features = ["native-tls", "json", "stream", "socks", "charset", "http2", "system-proxy"] }
 tokio = { version = "1", features = ["full", "sync"] }
 tokio-util = "0.7"
-sysinfo = "0.39"
+sysinfo = "0.40"
 lazy_static = "1.5"
 # 0.23 turns on `simd-unsafe` by default, decoding via hand-written unsafe
 # AVX2/NEON. This crate decodes attacker-influenced input (proxy CONNECT auth,
@@ -58,7 +58,7 @@ base64 = { version = "0.23", default-features = false, features = ["std"] }
 libc = "0.2"
 async-trait = "0.1"
 futures-util = "0.3"
-zip = { version = "8", default-features = false, features = ["deflate-flate2"] }
+zip = { version = "9", default-features = false, features = ["deflate-flate2"] }
 tar = "0"
 bzip2 = "0"
 flate2 = "1"
@@ -78,9 +78,9 @@ axum = { version = "0.8.9", features = ["ws"] }
 tower = "0.5"
 tower-http = { version = "0.7", features = ["cors"] }
 rand = "0.10.2"
-utoipa = { version = "5", features = ["axum_extras", "chrono"] }
-utoipa-axum = "0.2"
-argon2 = "0.5"
+utoipa = { version = "6", features = ["axum_extras", "chrono"] }
+utoipa-axum = "0.3"
+argon2 = "0.6"
 aes-gcm = "0.11"
 aes = "0.9"
 cbc = "0.2"
@@ -97,13 +97,13 @@ async-socks5 = "0.6"
 
 # Wayfern CDP integration
 tokio-tungstenite = { version = "0.30", features = ["native-tls"] }
-rusqlite = { version = "0.40", features = ["bundled"] }
+rusqlite = { version = "0.42", features = ["bundled"] }
 serde_yaml = "0.9"
 toml = "1.1"
 thiserror = "2.0"
 regex-lite = "0.1"
 tempfile = "3"
-maxminddb = "0.30"
+maxminddb = "0.32"
 quick-xml = { version = "0.42", features = ["serialize"] }
 
 # VPN support
@@ -112,7 +112,7 @@ smoltcp = { version = "0.14", default-features = false, features = ["std", "medi
 
 # Tray icon decoding (main-process system tray)
 image = "0.25"
-dirs = "6"
+dirs = "7"
 crossbeam-channel = "0.5"
 sys-locale = "0.3"
 
